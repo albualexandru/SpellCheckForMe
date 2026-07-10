@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SpellCheckForMe Options</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 24px;
+        max-width: 640px;
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+        font-weight: 600;
+      }
+      input {
+        width: 100%;
+        margin-top: 6px;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 16px;
+        padding: 8px 12px;
+      }
+      #status {
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SpellCheckForMe</h1>
+    <label for="geminiModel">Gemini model name</label>
+    <input id="geminiModel" type="text" placeholder="gemini-2.0-flash" />
+
+    <label for="geminiApiKey">Gemini API key</label>
+    <input id="geminiApiKey" type="password" placeholder="Enter your Gemini API key" />
+
+    <button id="save" type="button">Save</button>
+    <div id="status"></div>
+
+    <script src="options.js"></script>
+  </body>
+</html>
