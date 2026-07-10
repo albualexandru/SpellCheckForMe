@@ -16,7 +16,7 @@ Chrome extension that adds a **"Spell check selection"** right-click action.
 1. Open `chrome://extensions/`
 2. Enable **Developer mode**
 3. Click **Load unpacked**
-4. Select `/home/runner/work/SpellCheckForMe/SpellCheckForMe`
+4. Select this repository folder (the directory that contains `manifest.json`)
 
 ## Configure
 

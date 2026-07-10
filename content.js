@@ -28,7 +28,7 @@ function replaceSelection(replacement, originalText) {
     }
 
     if (originalText && activeEl.value.includes(originalText)) {
-      activeEl.value = activeEl.value.replace(originalText, replacement);
+      activeEl.value = activeEl.value.replaceAll(originalText, replacement);
       activeEl.dispatchEvent(new Event("input", { bubbles: true }));
       activeEl.dispatchEvent(new Event("change", { bubbles: true }));
       return;
@@ -49,7 +49,7 @@ function replaceSelection(replacement, originalText) {
     while (walker.nextNode()) {
       const node = walker.currentNode;
       if (node?.nodeValue?.includes(originalText)) {
-        node.nodeValue = node.nodeValue.replace(originalText, replacement);
+        node.nodeValue = node.nodeValue.replaceAll(originalText, replacement);
         return;
       }
     }
