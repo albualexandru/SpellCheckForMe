@@ -1,6 +1,9 @@
 chrome.runtime.onMessage.addListener((message) => {
   if (message?.type === "replace-selection") {
-    replaceSelection(message.correctedText, message.originalText);
+    const replaced = replaceSelection(message.correctedText);
+    if (!replaced) {
+      window.alert("Could not replace the selected text. Please keep the selection active and try again.");
+    }
     return;
   }
 
@@ -9,7 +12,7 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
-function replaceSelection(replacement, originalText) {
+function replaceSelection(replacement) {
   const activeEl = document.activeElement;
   if (
     activeEl &&
@@ -24,14 +27,7 @@ function replaceSelection(replacement, originalText) {
       activeEl.setRangeText(replacement, start, end, "end");
       activeEl.dispatchEvent(new Event("input", { bubbles: true }));
       activeEl.dispatchEvent(new Event("change", { bubbles: true }));
-      return;
-    }
-
-    if (originalText && activeEl.value.includes(originalText)) {
-      activeEl.value = activeEl.value.replaceAll(originalText, replacement);
-      activeEl.dispatchEvent(new Event("input", { bubbles: true }));
-      activeEl.dispatchEvent(new Event("change", { bubbles: true }));
-      return;
+      return true;
     }
   }
 
@@ -41,21 +37,8 @@ function replaceSelection(replacement, originalText) {
     range.deleteContents();
     range.insertNode(document.createTextNode(replacement));
     selection.removeAllRanges();
-    return;
+    return true;
   }
 
-  if (originalText && document.body?.innerText?.includes(originalText)) {
-    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    let replaced = false;
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      if (node?.nodeValue?.includes(originalText)) {
-        node.nodeValue = node.nodeValue.replaceAll(originalText, replacement);
-        replaced = true;
-      }
-    }
-    if (replaced) {
-      return;
-    }
-  }
+  return false;
 }
