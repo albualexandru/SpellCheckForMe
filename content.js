@@ -46,12 +46,16 @@ function replaceSelection(replacement, originalText) {
 
   if (originalText && document.body?.innerText?.includes(originalText)) {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let replaced = false;
     while (walker.nextNode()) {
       const node = walker.currentNode;
       if (node?.nodeValue?.includes(originalText)) {
         node.nodeValue = node.nodeValue.replaceAll(originalText, replacement);
-        return;
+        replaced = true;
       }
+    }
+    if (replaced) {
+      return;
     }
   }
 }
